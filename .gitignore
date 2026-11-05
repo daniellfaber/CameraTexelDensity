@@ -1,0 +1,11 @@
+# Blender working / test files
+*.blend
+*.blend1
+*.blend@
+
+# Local test suite and renders (kept locally, not published)
+tests/
+
+# Python
+__pycache__/
+*.pyc
