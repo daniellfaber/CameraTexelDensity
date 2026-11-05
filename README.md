@@ -17,6 +17,8 @@ Works in Blender 5.0 and above.
 
 ## How to use it
 
+![The Camera Texel Density panel in the UV Tools tab](images/ui_panel.png)
+
 1. Make sure your scene has an active camera set up where you want it.
 2. Select all the objects you want to optimise.
 3. Make one of them the **active object**. This is your reference: its UVs stay exactly as they are,
