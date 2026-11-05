@@ -6,6 +6,9 @@
 # Local test suite and renders (kept locally, not published)
 tests/
 
+# Internal handover / tech spec for future agents (local only)
+TECH_SPEC.md
+
 # Python
 __pycache__/
 *.pyc
