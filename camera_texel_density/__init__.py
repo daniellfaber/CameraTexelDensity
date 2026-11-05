@@ -69,6 +69,8 @@ CLOSE_WARNING_SCALE = 10.0
 # UVs are rounded to this many decimals when deciding whether two faces share
 # a UV vertex, i.e. belong to the same island.
 UV_KEY_DECIMALS = 6
+# Maximum number of different UV map names listed in the panel's mismatch warning.
+MAX_UV_GROUPS_SHOWN = 5
 # Maximum number of individual warnings sent to the status bar / Info editor.
 # The full list is always printed to the system console.
 MAX_REPORTED_WARNINGS = 8
@@ -382,6 +384,24 @@ def count_object_users(meshes):
     return counts
 
 
+def active_uv_map_groups(objects):
+    """Group mesh objects by the name of their active UV map (the one
+    highlighted in the UV Maps list). Objects with no UV map are grouped
+    under None. Returns {name: [objects]}, largest group first. More than one
+    group means the selection doesn't share the same active UV map."""
+    groups = {}
+    for ob in objects:
+        if ob.type != 'MESH':
+            continue
+        uv = ob.data.uv_layers.active
+        groups.setdefault(uv.name if uv else None, []).append(ob)
+    return dict(sorted(groups.items(), key=lambda kv: (-len(kv[1]), kv[0] or "")))
+
+
+def uv_map_label(name):
+    return name if name is not None else "(no UV map)"
+
+
 # -------------------------------------------------------------------------
 # Settings, operator, UI
 # -------------------------------------------------------------------------
@@ -449,6 +469,12 @@ class UV_OT_camera_texel_density(Operator):
         elif view.is_panoramic:
             warnings.append("Panoramic camera: depth along the view direction only "
                             "approximates on-screen size")
+
+        uv_groups = active_uv_map_groups(selected)
+        if len(uv_groups) > 1:
+            listing = ", ".join(f"'{uv_map_label(n)}' ({len(obs)})" for n, obs in uv_groups.items())
+            warnings.insert(0, f"Selected objects have different active UV maps: {listing}. "
+                               f"Each object's own active UV map was scaled")
 
         # --- Group by mesh datablock (shared meshes are processed once) ---
         by_mesh = {}
@@ -563,13 +589,32 @@ class CTD_PanelBase:
         col.label(text=f"Camera: {cam.name if cam else 'None'}",
                   icon='CAMERA_DATA' if cam else 'ERROR')
         act = context.active_object
+        uv_groups = active_uv_map_groups(context.selected_objects)
+        mixed = len(uv_groups) > 1
         if act is not None and act.type == 'MESH':
             col.label(text=f"Reference: {act.name}", icon='OBJECT_DATA')
-            uv = act.data.uv_layers.active
-            col.label(text=f"UV Map: {uv.name if uv else 'None'}",
-                      icon='GROUP_UVS' if uv else 'ERROR')
+            if mixed:
+                col.label(text="UV Map: mixed", icon='ERROR')
+            else:
+                uv = act.data.uv_layers.active
+                col.label(text=f"UV Map: {uv.name if uv else 'None'}",
+                          icon='GROUP_UVS' if uv else 'ERROR')
         else:
             col.label(text="Reference: no active mesh", icon='ERROR')
+
+        # Warn when the selection doesn't share one active UV map, e.g. half
+        # on Atlas_UV and half on Lightmap_UV.
+        if mixed:
+            box = layout.box()
+            col = box.column(align=True)
+            col.alert = True
+            col.label(text="Active UV maps don't match", icon='ERROR')
+            shown = list(uv_groups.items())[:MAX_UV_GROUPS_SHOWN]
+            for name, obs in shown:
+                col.label(text=f"{uv_map_label(name)}: {len(obs)} object{'s' if len(obs) != 1 else ''}")
+            if len(uv_groups) > MAX_UV_GROUPS_SHOWN:
+                col.label(text=f"...and {len(uv_groups) - MAX_UV_GROUPS_SHOWN} more")
+            col.label(text="Make the same UV map active on all")
 
 
 class VIEW3D_PT_camera_texel_density(CTD_PanelBase, Panel):

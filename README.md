@@ -41,6 +41,9 @@ It's safe to press the button more than once. If nothing has changed, nothing mo
 
 - **It only changes the active UV map.** That's the one highlighted in the UV Maps list and shown in
   the UV Editor. The panel shows which UV map it will use.
+- **It warns you if your selection has different UV maps active.** For example, if half your objects
+  have `Atlas_UV` active and the other half `Lightmap_UV`, the panel shows a red warning listing each
+  map and how many objects use it. Make the same UV map active on all of them before you run it.
 - **It only scales, it doesn't move anything.** Each UV island scales from its own centre, so your
   layout stays where it is. Islands may overlap or go outside the 0–1 space afterwards.
 - **Pack by hand afterwards, with island scaling turned off.** If you use Pack Islands with scaling
