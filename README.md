@@ -7,7 +7,7 @@ camera get less UV space in the atlas, and objects close to it get more.
 ## Install
 
 Blender > Edit > Preferences > Get Extensions > ⌄ (top right) > **Install from Disk…** and pick
-`dist/camera_texel_density-2.0.0.zip`.
+`dist/camera_texel_density-1.0.0.zip`.
 
 ## Use
 

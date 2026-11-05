@@ -39,7 +39,7 @@ holds if the user later makes a different, already-optimized object active.
 bl_info = {
     "name": "Camera Texel Density",
     "author": "Daniel Faber",
-    "version": (2, 0, 0),
+    "version": (1, 0, 0),
     "blender": (5, 0, 0),
     "location": "3D Viewport / UV Editor > Sidebar (N) > UV Tools",
     "description": "Scale UVs so texel density looks consistent from a fixed camera",

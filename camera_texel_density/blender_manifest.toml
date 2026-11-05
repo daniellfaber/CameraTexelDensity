@@ -1,7 +1,7 @@
 schema_version = "1.0.0"
 
 id = "camera_texel_density"
-version = "2.0.0"
+version = "1.0.0"
 name = "Camera Texel Density"
 tagline = "Scale UVs so texel density looks even from a fixed camera"
 maintainer = "Daniel Faber"
