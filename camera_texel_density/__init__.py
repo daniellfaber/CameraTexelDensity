@@ -41,7 +41,7 @@ bl_info = {
     "author": "Daniel Faber",
     "version": (1, 0, 0),
     "blender": (5, 0, 0),
-    "location": "3D Viewport / UV Editor > Sidebar (N) > UV Tools",
+    "location": "3D Viewport / UV Editor > Sidebar (N) > Camera Texel Density",
     "description": "Scale UVs so texel density looks consistent from a fixed camera",
     "category": "UV",
 }
@@ -569,7 +569,7 @@ class UV_OT_camera_texel_density(Operator):
 
 class CTD_PanelBase:
     bl_region_type = 'UI'
-    bl_category = "UV Tools"
+    bl_category = "Camera Texel Density"
     bl_label = "Camera Texel Density"
 
     def draw(self, context):

@@ -17,13 +17,13 @@ Works in Blender 5.0 and above.
 
 ## How to use it
 
-![The Camera Texel Density panel in the UV Tools tab](images/ui_panel.png)
+![The Camera Texel Density panel in the sidebar](images/ui_panel.png)
 
 1. Make sure your scene has an active camera set up where you want it.
 2. Select all the objects you want to optimise.
 3. Make one of them the **active object**. This is your reference: its UVs stay exactly as they are,
    and everything else is scaled to match it.
-4. Open the sidebar with **N** (in the 3D Viewport or the UV Editor) and go to the **UV Tools** tab.
+4. Open the sidebar with **N** (in the 3D Viewport or the UV Editor) and go to the **Camera Texel Density** tab.
 5. Press **Optimize Texel Density**.
 
 That's it. You can run it from Object Mode or Edit Mode, and Ctrl+Z undoes it.
