@@ -1,6 +1,6 @@
 # Camera Texel Density
 
-A Blender add-on I made for scenes with a fixed camera, where everything shares one texture atlas.
+A Blender add-on made for scenes with a fixed camera, where everything shares one texture atlas.
 
 Objects further from the camera take up fewer pixels on screen, so they don't need as much texture
 resolution as objects up close. This add-on scales each object's UVs based on how far it is from the
